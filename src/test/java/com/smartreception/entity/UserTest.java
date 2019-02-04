@@ -51,6 +51,7 @@ public class UserTest {
     // test
     User user = userController.insert(newUser);
     
+    // Test Http POST
     this.mockMvc.perform(
         MockMvcRequestBuilders.post("/user")
         .contentType(MediaType.APPLICATION_JSON)     
