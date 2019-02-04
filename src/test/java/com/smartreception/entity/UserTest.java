@@ -46,9 +46,9 @@ public class UserTest {
     
     // data
     User newUser = TestUtils.createUser();
-    
+    // mock
     when(userService.insert(newUser)).thenReturn(newUser);
-    
+    // test
     User user = userController.insert(newUser);
     
     this.mockMvc.perform(
@@ -57,6 +57,7 @@ public class UserTest {
         .content(TestUtils.convertObjectToJsonBytes(newUser)))
         .andExpect(MockMvcResultMatchers.status().isCreated());
     
+    // assert & verify
     assertEquals(user, newUser);
     verify(userService, times(2)).insert(newUser);
   }
