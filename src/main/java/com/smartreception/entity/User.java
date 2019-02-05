@@ -15,7 +15,7 @@ public class User {
   
   @NotEmpty(message = "{notEmpty.user.userId}")
   private String userId;
-
+  
   private String firstName;
   
   private String lastName;
@@ -24,7 +24,7 @@ public class User {
   private String organizationName;
   
   private String email;
-
-  private String phone;
   
+  private String phone;
+
 }

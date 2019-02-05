@@ -10,7 +10,7 @@ import com.smartreception.dao.UserDao;
 import com.smartreception.entity.User;
 
 @Component
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
   private final SimpleJdbcInsert simpleJdbcInsert;
   private final NamedParameterJdbcTemplate npJdbcTemplate;
@@ -21,7 +21,6 @@ public class UserDaoImpl implements UserDao{
         .withTableName("users")
         .usingColumns("userId", "firstName", "lastName", "organizationName", "email", "phone")
         .usingGeneratedKeyColumns("id");
-  
   }
   
   @Override

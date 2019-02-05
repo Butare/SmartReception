@@ -18,10 +18,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'  
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'mysql:mysql-connector-java'
-    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'junit:junit'
     testImplementation 'org.mockito:mockito-core'
-    runtimeOnly 'com.h2database:h2'
+    testCompile 'com.h2database:h2'
     
 }
