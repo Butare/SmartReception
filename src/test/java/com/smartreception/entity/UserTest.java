@@ -47,19 +47,30 @@ public class UserTest {
     // data
     User newUser = TestUtils.createUser();
     // mock
-    when(userService.insert(newUser)).thenReturn(newUser);
+    when(userService.insert(newUser)).thenReturn(newUser.getId());
     // test
     User user = userController.insert(newUser);
-    
-    // Test Http POST
-    this.mockMvc.perform(
-        MockMvcRequestBuilders.post("/user")
-        .contentType(MediaType.APPLICATION_JSON)     
-        .content(TestUtils.convertObjectToJsonBytes(newUser)))
-        .andExpect(MockMvcResultMatchers.status().isCreated());
-    
     // assert & verify
     assertEquals(user, newUser);
-    verify(userService, times(2)).insert(newUser);
+    verify(userService, times(1)).insert(newUser);
+  }
+  
+  @Test
+  public void testInsertPostRequest() throws Exception {
+    
+    // data
+    User newUser = TestUtils.createUser();
+    
+    // mock
+    when(userService.insert(newUser)).thenReturn(newUser.getId());
+
+    this.mockMvc.perform(
+      MockMvcRequestBuilders.post("/user")
+      .contentType(MediaType.APPLICATION_JSON)     
+      .content(TestUtils.convertObjectToStringBytes(newUser)))
+      .andExpect(MockMvcResultMatchers.status().isCreated());
+    
+    // verify
+    verify(userService, times(1)).insert(newUser);
   }
 }

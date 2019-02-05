@@ -20,6 +20,11 @@ public class User {
   
   private String lastName;
   
-  @NotEmpty(message = "{notEmpty.User.companyName}")
-  private String companyName;
+  @NotEmpty(message = "{notEmpty.User.organizationName}")
+  private String organizationName;
+  
+  private String email;
+
+  private String phone;
+  
 }

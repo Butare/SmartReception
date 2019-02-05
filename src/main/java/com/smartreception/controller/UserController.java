@@ -23,6 +23,8 @@ public class UserController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public User insert(@RequestBody @Valid User user) {
-    return userService.insert(user);
+    long id = userService.insert(user);
+    user.setId(id);
+    return user;
   }
 }
