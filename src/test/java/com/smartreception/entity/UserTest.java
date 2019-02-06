@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.smartreception.controller.UserController;
@@ -42,12 +43,10 @@ public class UserTest {
   }
   
   @Test
-  public void testInsert() throws Exception {
+  public void testInsertShouldReturnInsertedUser() throws Exception {
     
     // data
     User newUser = TestUtils.createUser();
-    // mock
-    when(userService.insert(newUser)).thenReturn(newUser.getId());
     // test
     User user = userController.insert(newUser);
     // assert & verify
@@ -56,21 +55,19 @@ public class UserTest {
   }
   
   @Test
-  public void testInsertPostRequest() throws Exception {
+  public void testInsertPostShouldReturnCreatedStatus() throws Exception {
     
     // data
     User newUser = TestUtils.createUser();
-    
-    // mock
-    when(userService.insert(newUser)).thenReturn(newUser.getId());
 
     this.mockMvc.perform(
       MockMvcRequestBuilders.post("/user")
       .contentType(MediaType.APPLICATION_JSON)     
-      .content(TestUtils.convertObjectToStringBytes(newUser)))
-      .andExpect(MockMvcResultMatchers.status().isCreated());
+      .content(TestUtils.convertObjectToStringBytes(newUser))
+      )
+      .andExpect(status().isCreated());
     
     // verify
-    verify(userService, times(1)).insert(newUser);
+    verify(userService).insert(newUser);
   }
 }

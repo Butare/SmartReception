@@ -20,7 +20,11 @@ public class TestUtils {
   }
   
   public static User createUser() {
-    return createUser(1L, "user-001", "reception-test");
+    return createUser(0L);
+  }
+  
+  public static User createUser(long id) {
+    return createUser(id, "user-001", "reception-test");
   }
   
   /**
