@@ -1,7 +1,7 @@
-package com.smartreception.entity;
+package com.smartreception.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -19,18 +19,23 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.smartreception.controller.UserController;
+import com.smartreception.dao.UserDao;
+import com.smartreception.entity.User;
 import com.smartreception.service.UserService;
 import com.smartreception.util.TestUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserTest {
+public class UserControllerTest {
   
   @InjectMocks
   UserController userController;
   
   @Mock
   private UserService userService;
+  
+  @Mock 
+  private UserDao userDao;
   
   private MockMvc mockMvc;
   
@@ -68,5 +73,20 @@ public class UserTest {
     
     // verify
     verify(userService).insert(newUser);
+  }
+  
+  @Test
+  public void testUpdateShouldReturnUpdatedUser() throws Exception {
+    long id = 1;
+    User dbUser = TestUtils.createUser(id);
+    User toUpdateUser = TestUtils.createUser(1L, "u-001", "test-company");
+    
+    // mock
+    when(userDao.getUserById(id)).thenReturn(dbUser);
+    
+    User updatedUser = userController.update(toUpdateUser, id);
+    
+    assertEquals(toUpdateUser, updatedUser);
+    
   }
 }

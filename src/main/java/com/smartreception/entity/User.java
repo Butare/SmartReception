@@ -1,5 +1,7 @@
 package com.smartreception.entity;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
@@ -26,5 +28,9 @@ public class User {
   private String email;
   
   private String phone;
+  
+  private LocalDateTime createdAt;
+  
+  private LocalDateTime updatedAt;
 
 }
