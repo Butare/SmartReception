@@ -22,7 +22,7 @@ public class UserDaoImpl implements UserDao {
     this.npJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
     this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
         .withTableName("users")
-        .usingColumns("userId", "firstName", "lastName", "organizationName", "email", "phone")
+        .usingColumns("userId", "firstName", "lastName", "organizationName", "email", "phone", "createdAt", "updatedAt")
         .usingGeneratedKeyColumns("id");
   }
   
@@ -34,8 +34,12 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public User getUserById(long id) {
-   return npJdbcTemplate.queryForObject(
-           "SELECT * FROM users WHERE id =:Id", Map.of("Id", id), new UserRowMapper());
+    try {
+      return npJdbcTemplate.queryForObject(
+           "SELECT * FROM users WHERE id = :Id", Map.of("Id", id), new UserRowMapper());
+    }catch(RuntimeException ex) {
+      return null;
+    }
   }
 
   @Override

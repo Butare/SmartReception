@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -59,13 +60,13 @@ public class UserControllerTest {
   }
   
   @Test
-  public void testInsertPostShouldReturnCreatedStatus() throws Exception {
+  public void testPostURIShouldReturnCreatedStatus() throws Exception {
     
     // data
     User newUser = TestUtils.createUser();
 
     this.mockMvc.perform(
-      MockMvcRequestBuilders.post("/user")
+      post("/users")
       .contentType(MediaType.APPLICATION_JSON)     
       .content(TestUtils.convertObjectToStringBytes(newUser))
       )
@@ -78,15 +79,27 @@ public class UserControllerTest {
   @Test
   public void testUpdateShouldReturnUpdatedUser() throws Exception {
     long id = 1;
-    User dbUser = TestUtils.createUser(id);
-    User toUpdateUser = TestUtils.createUser(1L, "u-001", "test-company");
+    User toUpdateUser = TestUtils.createUser(id, "u-001", "test-company");
     
     // mock
-    when(userDao.getUserById(id)).thenReturn(dbUser);
-    
+    when(userService.getUserById(id)).thenReturn(toUpdateUser);
     User updatedUser = userController.update(toUpdateUser, id);
-    
+
+    // assert & verify
     assertEquals(toUpdateUser, updatedUser);
-    
+    verify(userService).update(toUpdateUser, id);
+  }
+  
+  @Test
+  public void testPutURIShouldReturnOKstatus() throws Exception {
+    // data
+    long id = 1;
+    User user = TestUtils.createUser(id);
+    this.mockMvc.perform(put("/users/{id}", user.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(TestUtils.convertObjectToStringBytes(user)))
+        .andExpect(status().isOk());
+    verify(userService, times(1)).getUserById(id);
+    verify(userService, times(1)).update(user, id);
   }
 }

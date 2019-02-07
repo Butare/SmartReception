@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.smartreception.entity.User;
 import com.smartreception.service.UserService;
 
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/users")
 @RestController
 public class UserController {
   
@@ -31,6 +31,7 @@ public class UserController {
   }
   
   @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
   public User update(@RequestBody @Valid User user, @PathVariable("id") long id) {
     userService.update(user, id);
     return userService.getUserById(id);

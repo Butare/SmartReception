@@ -28,8 +28,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public int update(User user, long id) {
-    User dbUser = userDao.getUserById(id);
-    if (ObjectUtils.isEmpty(dbUser)) {
+    if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
       throw new NotFoundException("User does not exist. id = "+ id);
     }
     user.setId(id);
@@ -37,7 +36,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserById(long userId) {
-    return userDao.getUserById(userId);
+  public User getUserById(long id) {
+    User user = userDao.getUserById(id);
+    if (ObjectUtils.isEmpty(user)) {
+      throw new NotFoundException("User does not exist. id = "+ id);
+    }
+    return user;
   }
 }

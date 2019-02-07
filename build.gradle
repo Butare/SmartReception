@@ -23,5 +23,5 @@ dependencies {
     testCompile 'junit:junit'
     testImplementation 'org.mockito:mockito-core'
     testCompile 'com.h2database:h2'
-    
+    annotationProcessor 'org.projectlombok:lombok'
 }
