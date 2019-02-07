@@ -17,8 +17,7 @@ steps:
       - .gradle
   - run: 
       name: save test results
-      command: |
-      mkdir -p ~/junit/
+      command: mkdir -p ~/junit/
   - store_test_results:
       path: ~/junit
   - store_artifacts:
