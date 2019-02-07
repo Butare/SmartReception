@@ -19,7 +19,6 @@ steps:
       name: save test results
       command: |
       mkdir -p ~/junit/
-      when: always
   - store_test_results:
       path: ~/junit
   - store_artifacts:
