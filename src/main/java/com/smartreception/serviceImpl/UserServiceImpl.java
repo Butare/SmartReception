@@ -2,9 +2,11 @@ package com.smartreception.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import com.smartreception.dao.UserDao;
 import com.smartreception.entity.User;
+import com.smartreception.exception.NotFoundException;
 import com.smartreception.service.UserService;
 
 @Component
@@ -14,7 +16,7 @@ public class UserServiceImpl implements UserService {
   private UserDao userDao;
   
   @Override
-  public User insert(User user) {
+  public long insert(User user) {
     return userDao.insert(user);
   }
 
@@ -25,9 +27,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User update(long id) {
-    // TODO Auto-generated method stub
-    return null;
+  public int update(User user, long id) {
+    if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
+      throw new NotFoundException("User does not exist. id = "+ id);
+    }
+    user.setId(id);
+    return userDao.update(user);
   }
 
+  @Override
+  public User getUserById(long id) {
+    User user = userDao.getUserById(id);
+    if (ObjectUtils.isEmpty(user)) {
+      throw new NotFoundException("User does not exist. id = "+ id);
+    }
+    return user;
+  }
 }

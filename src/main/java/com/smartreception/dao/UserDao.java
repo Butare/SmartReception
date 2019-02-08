@@ -1,13 +1,9 @@
 package com.smartreception.dao;
 
-import org.springframework.stereotype.Component;
-
 import com.smartreception.entity.User;
 
-@Component
-public class UserDao {
-  
-  public User insert(User user) {
-    return user;
-  }
+public interface UserDao {
+  public long insert(User user);
+  public User getUserById(long id);
+  public int update(User user);
 }
