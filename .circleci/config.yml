@@ -1,7 +1,7 @@
 version: 2
 jobs: 
   build:
-    working_directory:~/SmartReception
+    working_directory: ~/SmartReception
 
     docker: 
       - image: circleci/openjdk:stretch-node-browsers-legacy
