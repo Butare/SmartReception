@@ -1,28 +1,16 @@
 version: 2
 jobs: 
   build:
-    working_directory: ~/SmartReception
-
     docker: 
       - image: circleci/openjdk:stretch-node-browsers-legacy
     steps:
       - checkout
-
-      - restore_cache:
-        key: gradle-cache-{{ "build.gradle" }}
-      
       - run: 
           name: build and test with production code
           command: ./gradlew build
-      - save_cache: 
-          key: gradle-cache-{{ checksum "build.gradle"}}
-          paths: 
-            - ~/.gradle
-            - .gradle
       - run: 
           name: save test results
-          command: |
-            mkdir -p ~/junit/
+          command: mkdir -p ~/junit/
       - store_test_results:
           path: ~/junit
       - store_artifacts:
