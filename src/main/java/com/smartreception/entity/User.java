@@ -1,5 +1,7 @@
 package com.smartreception.entity;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
@@ -15,11 +17,20 @@ public class User {
   
   @NotEmpty(message = "{notEmpty.user.userId}")
   private String userId;
-
+  
   private String firstName;
   
   private String lastName;
   
-  @NotEmpty(message = "{notEmpty.User.companyName}")
-  private String companyName;
+  @NotEmpty(message = "{notEmpty.User.organizationName}")
+  private String organizationName;
+  
+  private String email;
+  
+  private String phone;
+  
+  private LocalDateTime createdAt;
+  
+  private LocalDateTime updatedAt;
+
 }

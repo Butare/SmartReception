@@ -1,0 +1,17 @@
+version: 2
+jobs: 
+  build:
+    docker: 
+      - image: circleci/openjdk:stretch-node-browsers-legacy
+    steps:
+      - checkout
+      - run: 
+          name: build and test with production code
+          command: ./gradlew build
+      - run: 
+          name: save test results
+          command: mkdir -p ~/junit/
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
