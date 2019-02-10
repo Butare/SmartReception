@@ -1,5 +1,6 @@
 package com.smartreception.daoImpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,4 +61,10 @@ public class UserDaoImpl implements UserDao {
         sqlBuilder.toString(),
         new BeanPropertySqlParameterSource(user));
   }
+
+  @Override
+  public List<User> getAll() {
+	return npJdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
+  }
+  
 }

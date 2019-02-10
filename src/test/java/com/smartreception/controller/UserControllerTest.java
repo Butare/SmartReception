@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 import org.junit.Before;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -64,7 +64,8 @@ public class UserControllerTest {
     
     // data
     User newUser = TestUtils.createUser();
-
+    
+    // test
     this.mockMvc.perform(
       post("/users")
       .contentType(MediaType.APPLICATION_JSON)     
@@ -95,11 +96,36 @@ public class UserControllerTest {
     // data
     long id = 1;
     User user = TestUtils.createUser(id);
+    
+    // test
     this.mockMvc.perform(put("/users/{id}", user.getId())
         .contentType(MediaType.APPLICATION_JSON)
         .content(TestUtils.convertObjectToStringBytes(user)))
         .andExpect(status().isOk());
+    
+    // verify
     verify(userService, times(1)).getUserById(id);
     verify(userService, times(1)).update(user, id);
   }
+  
+  /**
+   * Test GET /users as a method
+   * 
+   * @throws Exception
+   */
+  @Test
+  public void testGetAllShouldReturnAllUsersList() throws Exception {
+	userController.getAll();
+	verify(userService).getAll();
+  }
+  
+  /**
+   * Test GET /users as a request handler
+   * @throws Exception
+   */
+  @Test
+  public void testGetAllURIShouldReturnStatusOK() throws Exception {
+	this.mockMvc.perform(get("/users")).andExpect(status().isOk());  
+  }
+  
 }
