@@ -29,6 +29,8 @@ public class User {
   
   private String phone;
   
+  private Boolean deleted;
+  
   private LocalDateTime createdAt;
   
   private LocalDateTime updatedAt;

@@ -128,4 +128,12 @@ public class UserControllerTest {
 	this.mockMvc.perform(get("/users")).andExpect(status().isOk());  
   }
   
+  @Test
+  public void testDeleteURIShouldReturnStatusNoContentWhenPass() throws Exception {
+	// data
+	User user = TestUtils.createUser(1L);
+	this.mockMvc.perform(delete("/users/{id}", user.getId()))
+			.andExpect(status().isNoContent());
+  }
+  
 }

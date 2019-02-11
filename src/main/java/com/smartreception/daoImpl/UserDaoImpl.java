@@ -66,5 +66,11 @@ public class UserDaoImpl implements UserDao {
   public List<User> getAll() {
 	return npJdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
   }
+
+  @Override
+  public void delete(long id) {
+    String sqlQuery = "UPDATE users SET deleted = true WHERE id = :Id";
+    npJdbcTemplate.update(sqlQuery, Map.of("Id", id));
+  }
   
 }

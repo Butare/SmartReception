@@ -19,31 +19,32 @@ public class UserServiceImpl implements UserService {
   
   @Override
   public long insert(User user) {
+	if (ObjectUtils.isEmpty(user)) {
+	  throw new NotFoundException("User should be specified.");
+	}
     return userDao.insert(user);
   }
 
   @Override
   public void delete(long id) {
-    // TODO Auto-generated method stub
-    
+    checkUserExists(id);
+    userDao.delete(id);
   }
 
   @Override
   public int update(User user, long id) {
-    if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
-      throw new NotFoundException("User does not exist. id = "+ id);
-    }
+	if (ObjectUtils.isEmpty(user)) {
+	  throw new NotFoundException("User should be specified.");
+	}
+    checkUserExists(id);
     user.setId(id);
     return userDao.update(user);
   }
 
   @Override
   public User getUserById(long id) {
-    User user = userDao.getUserById(id);
-    if (ObjectUtils.isEmpty(user)) {
-      throw new NotFoundException("User does not exist. id = "+ id);
-    }
-    return user;
+    checkUserExists(id);
+    return userDao.getUserById(id);
   }
 
   @Override
@@ -51,4 +52,10 @@ public class UserServiceImpl implements UserService {
 	return userDao.getAll();
   }
 
+  private void checkUserExists(long id) {
+	if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
+	  throw new NotFoundException("User does not exist. id = "+ id);
+	}
+  }
+  
 }
