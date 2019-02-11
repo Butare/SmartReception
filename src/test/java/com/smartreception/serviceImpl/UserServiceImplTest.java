@@ -38,8 +38,9 @@ public class UserServiceImplTest {
   
   @Test(expected = NotFoundException.class)
   public void testDeleteUserShouldThrowWhenNull() throws Exception {
-	  Long id = 1L;
-	  when(userDao.getUserById(id)).thenReturn(null);
-	  userServiceImpl.delete(id);
+	Long id = 1L;
+	  
+	when(userDao.getUserById(id)).thenReturn(null);
+	userServiceImpl.delete(id);
   }
 }
