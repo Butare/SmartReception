@@ -1,5 +1,6 @@
 package com.smartreception.daoImpl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +16,14 @@ import com.smartreception.util.UserRowMapper;
 @Component
 public class UserDaoImpl implements UserDao {
 
+  /**
+   * The SimpleJdbcInsert
+   */
   private final SimpleJdbcInsert simpleJdbcInsert;
+  
+  /**
+   * The NamedParameterJdbcTemplate
+   */
   private final NamedParameterJdbcTemplate npJdbcTemplate;
   
   public UserDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -60,4 +68,16 @@ public class UserDaoImpl implements UserDao {
         sqlBuilder.toString(),
         new BeanPropertySqlParameterSource(user));
   }
+
+  @Override
+  public List<User> getAll() {
+	  return npJdbcTemplate.query("SELECT * FROM users WHERE deleted = FALSE", new UserRowMapper());
+  }
+
+  @Override
+  public void delete(long id) {
+    String sqlQuery = "UPDATE users SET deleted = TRUE WHERE id = :Id";
+    npJdbcTemplate.update(sqlQuery, Map.of("Id", id));
+  }
+  
 }
