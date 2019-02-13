@@ -19,4 +19,9 @@ public class VisitorServiceImpl implements VisitorService {
   public List<Visitor> getAll() {
 	return visitorDao.getAll();
   }
+
+  @Override
+  public long insert(Visitor visitor) {
+    return visitorDao.insert(visitor);
+  }
 }
