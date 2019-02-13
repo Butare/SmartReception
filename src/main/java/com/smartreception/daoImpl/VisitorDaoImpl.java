@@ -21,7 +21,7 @@ public class VisitorDaoImpl implements VisitorDao {
   
   @Override
   public List<Visitor> getAll() {
-    return npJdbcTemplate.query("SELECT * FROM visitor", new VisitorRowMapper());
+    return npJdbcTemplate.query("SELECT * FROM visitors", new VisitorRowMapper());
   }
 
 }
