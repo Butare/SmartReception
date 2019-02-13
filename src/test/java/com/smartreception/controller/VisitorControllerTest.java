@@ -48,9 +48,8 @@ public class VisitorControllerTest {
   
   @Test
   public void testGetAllVisitorsShouldReturnVisitorsList() throws Exception {
-    List<Visitor> visitorList = visitorController.getAllVisitors();
     // assert
-    assertTrue(visitorList instanceof List<?>);
+    assertTrue(visitorController.getAllVisitors() instanceof List<?>);
     // verify
     verify(visitorService).getAll();
   }
