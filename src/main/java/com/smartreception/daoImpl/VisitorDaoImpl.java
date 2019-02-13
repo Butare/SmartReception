@@ -41,8 +41,7 @@ public class VisitorDaoImpl implements VisitorDao {
 
   @Override
   public long insert(Visitor visitor) {
-    return simpleJdbcInsert
-        .executeAndReturnKey(
+    return simpleJdbcInsert.executeAndReturnKey(
             new BeanPropertySqlParameterSource(visitor)).longValue();
   }
 
