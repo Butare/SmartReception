@@ -44,7 +44,7 @@ public class UserController {
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   public List<User> getAll() {
-	return userService.getAll();
+    return userService.getAll();
   }
   
   @DeleteMapping("/{id}")

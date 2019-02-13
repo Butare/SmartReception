@@ -16,7 +16,14 @@ import com.smartreception.util.UserRowMapper;
 @Component
 public class UserDaoImpl implements UserDao {
 
+  /**
+   * The SimpleJdbcInsert
+   */
   private final SimpleJdbcInsert simpleJdbcInsert;
+  
+  /**
+   * The NamedParameterJdbcTemplate
+   */
   private final NamedParameterJdbcTemplate npJdbcTemplate;
   
   public UserDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -64,12 +71,12 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public List<User> getAll() {
-	return npJdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
+	  return npJdbcTemplate.query("SELECT * FROM users WHERE deleted = FALSE", new UserRowMapper());
   }
 
   @Override
   public void delete(long id) {
-    String sqlQuery = "UPDATE users SET deleted = true WHERE id = :Id";
+    String sqlQuery = "UPDATE users SET deleted = TRUE WHERE id = :Id";
     npJdbcTemplate.update(sqlQuery, Map.of("Id", id));
   }
   
