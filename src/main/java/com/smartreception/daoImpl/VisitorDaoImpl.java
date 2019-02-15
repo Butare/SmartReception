@@ -28,7 +28,7 @@ public class VisitorDaoImpl implements VisitorDao {
   public VisitorDaoImpl(JdbcTemplate jdbcTemplate) {
     simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
         .withTableName("visitors")
-        .usingColumns("type", "arrivalDate", "arrivalTime", "host", "note", "createdAt", "createdBy")
+        .usingColumns("type", "arrivalDate", "arrivalTime", "hostId", "note", "createdAt", "createdBy")
         .usingGeneratedKeyColumns("id");
     
     npJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());

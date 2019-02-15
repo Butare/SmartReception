@@ -1,5 +1,6 @@
 package com.smartreception.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class VisitorServiceImpl implements VisitorService {
 
   @Override
   public long insert(Visitor visitor) {
+    visitor.setCreatedAt(LocalDateTime.now());
+    visitor.setCreatedBy(visitor.getUser().getId());
     return visitorDao.insert(visitor);
   }
 }
