@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.smartreception.ContextHelper;
@@ -18,7 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class Visitor {
   private Long id;
   private String type; //TODO: better to make it a separate entity
