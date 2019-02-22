@@ -18,7 +18,7 @@ public class VisitorServiceImpl implements VisitorService {
   
   @Override
   public List<Visitor> getAll() {
-	return visitorDao.getAll();
+    return visitorDao.getAll();
   }
 
   @Override

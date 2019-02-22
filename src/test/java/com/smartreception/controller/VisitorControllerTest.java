@@ -88,6 +88,7 @@ public class VisitorControllerTest {
   private Visitor createVisitor(long id) {
     Visitor visitor = new Visitor();
     visitor.setId(id);
+    visitor.setHostId(0L);
     return visitor;
   }
 }

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @JsonNaming(SnakeCaseStrategy.class)
 public class User {
   
-  private Long id;
+  private long id;
   
   @NotEmpty(message = "{notEmpty.user.userId}")
   private String userId;

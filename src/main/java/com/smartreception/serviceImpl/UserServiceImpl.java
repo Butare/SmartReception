@@ -53,9 +53,9 @@ public class UserServiceImpl implements UserService {
   }
 
   private void checkUserExists(long id) {
-	if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
-	  throw new NotFoundException("User does not exist. id = "+ id);
-	}
+    if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
+      throw new NotFoundException("User does not exist. id = "+ id);
+    }
   }
   
 }
