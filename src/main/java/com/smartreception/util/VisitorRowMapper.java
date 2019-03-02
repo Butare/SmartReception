@@ -33,7 +33,7 @@ public class VisitorRowMapper implements RowMapper<Visitor>{
           Class<?> clazz = value.getClass();
           
           if (clazz == Timestamp.class) {
-            //TODO: convert mysq timestamp not required by now.
+            //TODO: remember to convert mysql timestamp when needed.
           }
         }
         bw.setPropertyValue(field, value);
@@ -41,12 +41,7 @@ public class VisitorRowMapper implements RowMapper<Visitor>{
         System.out.println(e.getMessage());
       }
     }
-//    Visitor visitor = new Visitor();
-//    visitor.setEmail(rs.getString("email"));
-//    //visitor.setHost(rs.getString("host"));
-//    visitor.setNote(rs.getString("note"));
-//    visitor.setArrivalDate(LocalDate.parse(rs.getString("arrivalDate")));
-//    visitor.setArrivalTime(LocalTime.parse(rs.getString("arrivalTime")));
+    
 	return mappedVisitor;
   }
   

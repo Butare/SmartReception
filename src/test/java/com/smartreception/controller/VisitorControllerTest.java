@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.smartreception.dao.UserDao;
 import com.smartreception.dao.VisitorDao;
 import com.smartreception.entity.Visitor;
 import com.smartreception.service.VisitorService;
@@ -37,6 +38,9 @@ public class VisitorControllerTest {
   @Mock
   private VisitorDao visitorDao;
   
+  @Mock 
+  private UserDao userDao;
+  
   private MockMvc mockMvc;
   
   @Before
@@ -61,24 +65,41 @@ public class VisitorControllerTest {
   public void testInsertShouldReturnInsertedVisitor() throws Exception {
     // data
     Visitor newFakeVisitor = createVisitor();
-    newFakeVisitor.setEmail("visitor@co-graph.com");
+    newFakeVisitor.setEmail("visitor@co-trial.com");
     Visitor insertedVisitor = visitorController.insert(newFakeVisitor);
     // assert
     assertEquals(newFakeVisitor, insertedVisitor);
-    assertTrue(insertedVisitor.getEmail().equals("visitor@co-graph.com"));
+    assertTrue(insertedVisitor.getEmail().equals("visitor@co-trial.com"));
     // verify
     verify(visitorService).insert(newFakeVisitor);
   }
   
   @Test
   public void testPostURIShouldReturnStatusCreated() throws Exception {
+	// data
     Visitor fakeVisitor = createVisitor();
+    
+    // test
     mockMvc.perform(post("/visitors")
         .contentType(MediaType.APPLICATION_JSON)
         .content(TestUtils.convertObjectToStringBytes(fakeVisitor)))
         .andExpect(status().isCreated());
+    
     // verify
     verify(visitorService).insert(fakeVisitor);
+  }
+  
+  @Test
+  public void testPutURIShouldReturnStatusNoContent() throws Exception {
+	// data
+    long id = 1L;
+	Visitor fakeVisitor = createVisitor(id);
+	
+	// test
+	mockMvc.perform(put("/visitors/{id}", id)
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(TestUtils.convertObjectToStringBytes(fakeVisitor)))
+		.andExpect(status().isNoContent());
   }
   
   private Visitor createVisitor() {
