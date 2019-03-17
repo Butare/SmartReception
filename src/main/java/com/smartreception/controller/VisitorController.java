@@ -43,7 +43,7 @@ public class VisitorController {
   }
   
   @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseStatus(HttpStatus.OK)
   public Visitor update(@PathVariable("id") long id, @Valid Visitor visitor) {
 	visitorService.update(id, visitor);
 	return visitorService.getVisitorById(id);
