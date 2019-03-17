@@ -32,11 +32,7 @@ public class VisitorServiceImpl implements VisitorService {
 
   @Override
   public int update(long id, Visitor visitor) {
-	Visitor visitorDb = visitorDao.getVisitorById(id);
-	if (ObjectUtils.isEmpty(visitorDb)) {
-	  throw new NotFoundException(String.format("User id = %d, does not exists.", id));
-	}
-	
+	checkVisitor(id);	
 	return visitorDao.update(visitor);
   }
 
@@ -44,4 +40,17 @@ public class VisitorServiceImpl implements VisitorService {
   public Visitor getVisitorById(long id) {
 	return visitorDao.getVisitorById(id);
   }
+
+  @Override
+  public void delete(long id) {
+    checkVisitor(id);	
+    visitorDao.delete(id);
+  }
+  
+  private void checkVisitor(long id) {
+	if (ObjectUtils.isEmpty(visitorDao.getVisitorById(id))) {
+	  throw new NotFoundException(String.format("User id = %d, does not exists.", id));
+	}
+  }
+  
 }

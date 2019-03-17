@@ -102,6 +102,15 @@ public class VisitorControllerTest {
 		.andExpect(status().isNoContent());
   }
   
+  @Test
+  public void testDeleteURIShouldReturnStatusNoContent() throws Exception {
+	// data
+	long id = 1L;
+	mockMvc.perform(delete("/visitors/{id}", id))
+	    .andExpect(status().isNoContent());
+	    
+  }
+  
   private Visitor createVisitor() {
     return createVisitor(0L);
   }

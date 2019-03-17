@@ -9,4 +9,5 @@ public interface VisitorDao {
   public long insert(Visitor visitor);
   public int update(Visitor visitor);
   public Visitor getVisitorById(long id);
+  public void delete(long id);
 }

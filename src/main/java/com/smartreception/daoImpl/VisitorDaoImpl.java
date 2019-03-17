@@ -73,4 +73,11 @@ public class VisitorDaoImpl implements VisitorDao {
 	}
   }
 
+  @Override
+  public void delete(long id) {
+    npJdbcTemplate.update(
+    	"UPDATE visitors SET deleted = TRUE, updatedAt = NOW() WHERE id = :Id",
+    	Map.of("Id", id));
+  }
+
 }
