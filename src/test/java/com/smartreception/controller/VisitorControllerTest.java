@@ -90,7 +90,7 @@ public class VisitorControllerTest {
   }
   
   @Test
-  public void testPutURIShouldReturnStatusNoContent() throws Exception {
+  public void testPutURIShouldReturnStatusOK() throws Exception {
 	// data
     long id = 1L;
 	Visitor fakeVisitor = createVisitor(id);
@@ -99,7 +99,16 @@ public class VisitorControllerTest {
 	mockMvc.perform(put("/visitors/{id}", id)
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(TestUtils.convertObjectToStringBytes(fakeVisitor)))
-		.andExpect(status().isNoContent());
+		.andExpect(status().isOk());
+  }
+  
+  @Test
+  public void testDeleteURIShouldReturnStatusNoContent() throws Exception {
+	// data
+	long id = 1L;
+	mockMvc.perform(delete("/visitors/{id}", id))
+	    .andExpect(status().isNoContent());
+	    
   }
   
   private Visitor createVisitor() {
