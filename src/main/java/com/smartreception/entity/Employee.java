@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-public class User {
+public class Employee {
   
   private long id;
   

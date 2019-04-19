@@ -9,12 +9,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 
-import com.smartreception.dao.UserDao;
-import com.smartreception.entity.User;
-import com.smartreception.util.UserRowMapper;
+import com.smartreception.dao.EmployeeDao;
+import com.smartreception.entity.Employee;
+import com.smartreception.util.EmployeeRowMapper;
 
 @Component
-public class UserDaoImpl implements UserDao {
+public class EmployeeDaoImpl implements EmployeeDao {
 
   /**
    * The SimpleJdbcInsert
@@ -26,34 +26,34 @@ public class UserDaoImpl implements UserDao {
    */
   private final NamedParameterJdbcTemplate npJdbcTemplate;
   
-  public UserDaoImpl(JdbcTemplate jdbcTemplate) {
+  public EmployeeDaoImpl(JdbcTemplate jdbcTemplate) {
     this.npJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
     this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
-        .withTableName("users")
+        .withTableName("employees")
         .usingColumns("userId", "firstName", "lastName", "organizationName", "email", "phone", "createdAt", "updatedAt")
         .usingGeneratedKeyColumns("id");
   }
   
   @Override
-  public long insert(User user) {
+  public long insert(Employee employee) {
     return this.simpleJdbcInsert.executeAndReturnKey(
-        new BeanPropertySqlParameterSource(user)).longValue();
+        new BeanPropertySqlParameterSource(employee)).longValue();
   }
 
   @Override
-  public User getUserById(long id) {
+  public Employee getEmployeeById(long id) {
     try {
       return npJdbcTemplate.queryForObject(
-           "SELECT * FROM users WHERE id = :Id", Map.of("Id", id), new UserRowMapper());
+           "SELECT * FROM employees WHERE id = :Id", Map.of("Id", id), new EmployeeRowMapper());
     }catch(RuntimeException ex) {
       return null;
     }
   }
 
   @Override
-  public int update(User user) {
+  public int update(Employee employee) {
     StringBuilder sqlBuilder = new StringBuilder()
-        .append("UPDATE users SET ")
+        .append("UPDATE employees SET ")
         .append("userId = :userId, ")
         .append("firstName = :firstName, ")
         .append("lastName = :lastName, ")
@@ -66,17 +66,17 @@ public class UserDaoImpl implements UserDao {
     
     return npJdbcTemplate.update(
         sqlBuilder.toString(),
-        new BeanPropertySqlParameterSource(user));
+        new BeanPropertySqlParameterSource(employee));
   }
 
   @Override
-  public List<User> getAll() {
-	  return npJdbcTemplate.query("SELECT * FROM users WHERE deleted = FALSE", new UserRowMapper());
+  public List<Employee> getAll() {
+	  return npJdbcTemplate.query("SELECT * FROM employees WHERE deleted = FALSE", new EmployeeRowMapper());
   }
 
   @Override
   public void delete(long id) {
-    String sqlQuery = "UPDATE users SET deleted = TRUE WHERE id = :Id";
+    String sqlQuery = "UPDATE employees SET deleted = TRUE WHERE id = :Id";
     npJdbcTemplate.update(sqlQuery, Map.of("Id", id));
   }
   

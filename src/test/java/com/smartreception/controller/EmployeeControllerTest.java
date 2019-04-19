@@ -19,93 +19,93 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.smartreception.controller.UserController;
-import com.smartreception.dao.UserDao;
-import com.smartreception.entity.User;
-import com.smartreception.service.UserService;
+import com.smartreception.controller.EmployeeController;
+import com.smartreception.dao.EmployeeDao;
+import com.smartreception.entity.Employee;
+import com.smartreception.service.EmployeeService;
 import com.smartreception.util.TestUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerTest {
+public class EmployeeControllerTest {
   
   @InjectMocks
-  UserController userController;
+  EmployeeController employeeController;
   
   @Mock
-  private UserService userService;
+  private EmployeeService employeeService;
   
   @Mock 
-  private UserDao userDao;
+  private EmployeeDao employeeDao;
   
   private MockMvc mockMvc;
   
   @Before
   public void setup() {
     this.mockMvc = MockMvcBuilders
-        .standaloneSetup(userController)
+        .standaloneSetup(employeeController)
         .build();
   }
   
   @Test
-  public void testInsertShouldReturnInsertedUser() throws Exception {
+  public void testInsertShouldReturnInsertedEmployee() throws Exception {
     
     // data
-    User newUser = TestUtils.createUser();
+    Employee newEmployee = TestUtils.createEmployee();
     // test
-    User user = userController.insert(newUser);
+    Employee employee = employeeController.insert(newEmployee);
     // assert & verify
-    assertEquals(user, newUser);
-    verify(userService, times(1)).insert(newUser);
+    assertEquals(employee, newEmployee);
+    verify(employeeService, times(1)).insert(newEmployee);
   }
   
   @Test
   public void testPostURIShouldReturnCreatedStatus() throws Exception {
     
     // data
-    User newUser = TestUtils.createUser();
+    Employee newEmployee = TestUtils.createEmployee();
     
     // test
     this.mockMvc.perform(
-      post("/users")
+      post("/employees")
       .contentType(MediaType.APPLICATION_JSON)     
-      .content(TestUtils.convertObjectToStringBytes(newUser))
+      .content(TestUtils.convertObjectToStringBytes(newEmployee))
       )
       .andExpect(status().isCreated());
     
     // verify
-    verify(userService).insert(newUser);
+    verify(employeeService).insert(newEmployee);
   }
   
   @Test
-  public void testUpdateShouldReturnUpdatedUser() throws Exception {
+  public void testUpdateShouldReturnUpdatedEmployee() throws Exception {
     long id = 1;
-    User toUpdateUser = TestUtils.createUser(id, "u-001", "test-company");
+    Employee toUpdateEmployee = TestUtils.createEmployee(id, "u-001", "test-company");
     
     // mock
-    when(userService.getUserById(id)).thenReturn(toUpdateUser);
-    User updatedUser = userController.update(toUpdateUser, id);
+    when(employeeService.getEmployeeById(id)).thenReturn(toUpdateEmployee);
+    Employee updatedEmployee = employeeController.update(toUpdateEmployee, id);
 
     // assert & verify
-    assertEquals(toUpdateUser, updatedUser);
-    verify(userService).update(toUpdateUser, id);
+    assertEquals(toUpdateEmployee, updatedEmployee);
+    verify(employeeService).update(toUpdateEmployee, id);
   }
   
   @Test
   public void testPutURIShouldReturnOKstatus() throws Exception {
     // data
     long id = 1;
-    User user = TestUtils.createUser(id);
+    Employee employee = TestUtils.createEmployee(id);
     
     // test
-    this.mockMvc.perform(put("/users/{id}", user.getId())
+    this.mockMvc.perform(put("/employees/{id}", employee.getId())
         .contentType(MediaType.APPLICATION_JSON)
-        .content(TestUtils.convertObjectToStringBytes(user)))
+        .content(TestUtils.convertObjectToStringBytes(employee)))
         .andExpect(status().isOk());
     
     // verify
-    verify(userService, times(1)).getUserById(id);
-    verify(userService, times(1)).update(user, id);
+    verify(employeeService, times(1)).getEmployeeById(id);
+    verify(employeeService, times(1)).update(employee, id);
   }
   
   /**
@@ -114,9 +114,9 @@ public class UserControllerTest {
    * @throws Exception
    */
   @Test
-  public void testGetAllShouldReturnAllUsersList() throws Exception {
-	userController.getAll();
-	verify(userService).getAll();
+  public void testGetAllShouldReturnAllEmployeesList() throws Exception {
+	employeeController.getAll();
+	verify(employeeService).getAll();
   }
   
   /**
@@ -125,14 +125,14 @@ public class UserControllerTest {
    */
   @Test
   public void testGetAllURIShouldReturnStatusOK() throws Exception {
-	this.mockMvc.perform(get("/users")).andExpect(status().isOk());  
+	this.mockMvc.perform(get("/employees")).andExpect(status().isOk());  
   }
   
   @Test
   public void testDeleteURIShouldReturnStatusNoContentWhenPass() throws Exception {
 	// data
-	User user = TestUtils.createUser(1L);
-	this.mockMvc.perform(delete("/users/{id}", user.getId()))
+	Employee user = TestUtils.createEmployee(1L);
+	this.mockMvc.perform(delete("/employees/{id}", user.getId()))
 			.andExpect(status().isNoContent());
   }
   

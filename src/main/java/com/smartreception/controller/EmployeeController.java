@@ -16,40 +16,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.smartreception.entity.User;
-import com.smartreception.service.UserService;
+import com.smartreception.entity.Employee;
+import com.smartreception.service.EmployeeService;
 
-@RequestMapping(path = "/users")
+@RequestMapping(path = "/employees")
 @RestController
-public class UserController {
+public class EmployeeController {
   
   @Autowired
-  private UserService userService;
+  private EmployeeService employeeService;
   
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public User insert(@RequestBody @Valid User user) {
-    long id = userService.insert(user);
-    user.setId(id);
-    return user;
+  public Employee insert(@RequestBody @Valid Employee employee) {
+    long id = employeeService.insert(employee);
+    employee.setId(id);
+    return employee;
   }
   
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public User update(@RequestBody @Valid User user, @PathVariable("id") long id) {
-    userService.update(user, id);
-    return userService.getUserById(id);
+  public Employee update(@RequestBody @Valid Employee employee, @PathVariable("id") long id) {
+    employeeService.update(employee, id);
+    return employeeService.getEmployeeById(id);
   }
   
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<User> getAll() {
-    return userService.getAll();
+  public List<Employee> getAll() {
+    return employeeService.getAll();
   }
   
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable("id") long id) {
-    userService.delete(id);
+    employeeService.delete(id);
   }
 }

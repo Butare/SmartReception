@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.smartreception.ContextHelper;
-import com.smartreception.dao.UserDao;
+import com.smartreception.dao.EmployeeDao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,18 +24,18 @@ public class Visitor {
   private LocalTime arrivalTime;
   private String email; // for front-desk clerk
   private Long hostId;  // host employee or company.
-  private User user;  // user ref.
+  private Employee employee;  // employee ref.
   private String note;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private Long createdBy;
   
-  public User getUser() {
-    if (user != null) {
-      return user;
+  public Employee getEmployee() {
+    if (employee != null) {
+      return employee;
     }
-    UserDao dao = ContextHelper.getContext().getBean(UserDao.class);
-    this.user = dao.getUserById(this.hostId);
-    return this.user;
+    EmployeeDao dao = ContextHelper.getContext().getBean(EmployeeDao.class);
+    this.employee = dao.getEmployeeById(this.hostId);
+    return this.employee;
   }
 }

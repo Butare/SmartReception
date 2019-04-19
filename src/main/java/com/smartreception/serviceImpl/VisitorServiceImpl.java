@@ -26,7 +26,7 @@ public class VisitorServiceImpl implements VisitorService {
   @Override
   public long insert(Visitor visitor) {
     visitor.setCreatedAt(LocalDateTime.now());
-    visitor.setCreatedBy(visitor.getUser().getId());
+    visitor.setCreatedBy(visitor.getEmployee().getId());
     return visitorDao.insert(visitor);
   }
 

@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.smartreception.dao.UserDao;
+import com.smartreception.dao.EmployeeDao;
 import com.smartreception.dao.VisitorDao;
 import com.smartreception.entity.Visitor;
 import com.smartreception.service.VisitorService;
@@ -39,7 +39,7 @@ public class VisitorControllerTest {
   private VisitorDao visitorDao;
   
   @Mock 
-  private UserDao userDao;
+  private EmployeeDao userDao;
   
   private MockMvc mockMvc;
   

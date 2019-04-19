@@ -6,54 +6,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.smartreception.dao.UserDao;
-import com.smartreception.entity.User;
+import com.smartreception.dao.EmployeeDao;
+import com.smartreception.entity.Employee;
 import com.smartreception.exception.NotFoundException;
-import com.smartreception.service.UserService;
+import com.smartreception.service.EmployeeService;
 
 @Component
-public class UserServiceImpl implements UserService {
+public class EmployeeServiceImpl implements EmployeeService {
 
   @Autowired
-  private UserDao userDao;
+  private EmployeeDao employeeDao;
   
   @Override
-  public long insert(User user) {
+  public long insert(Employee user) {
 	if (ObjectUtils.isEmpty(user)) {
 	  throw new NotFoundException("User should be specified.");
 	}
-    return userDao.insert(user);
+    return employeeDao.insert(user);
   }
 
   @Override
   public void delete(long id) {
     checkUserExists(id);
-    userDao.delete(id);
+    employeeDao.delete(id);
   }
 
   @Override
-  public int update(User user, long id) {
+  public int update(Employee user, long id) {
 	if (ObjectUtils.isEmpty(user)) {
 	  throw new NotFoundException("User should be specified.");
 	}
     checkUserExists(id);
     user.setId(id);
-    return userDao.update(user);
+    return employeeDao.update(user);
   }
 
   @Override
-  public User getUserById(long id) {
+  public Employee getEmployeeById(long id) {
     checkUserExists(id);
-    return userDao.getUserById(id);
+    return employeeDao.getEmployeeById(id);
   }
 
   @Override
-  public List<User> getAll() {
-	return userDao.getAll();
+  public List<Employee> getAll() {
+	return employeeDao.getAll();
   }
 
   private void checkUserExists(long id) {
-    if (ObjectUtils.isEmpty(userDao.getUserById(id))) {
+    if (ObjectUtils.isEmpty(employeeDao.getEmployeeById(id))) {
       throw new NotFoundException("User does not exist. id = "+ id);
     }
   }
