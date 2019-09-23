@@ -46,12 +46,12 @@ public class VisitorController {
   @ResponseStatus(HttpStatus.OK)
   public Visitor update(@PathVariable("id") long id, @Valid Visitor visitor) {
 	visitorService.update(id, visitor);
-	return visitorService.getVisitorById(id);
+	  return visitorService.getVisitorById(id);
   }
   
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable long id) {
-	visitorService.delete(id);
+	  visitorService.delete(id);
   }
 }

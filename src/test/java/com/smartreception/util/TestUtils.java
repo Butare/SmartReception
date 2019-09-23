@@ -36,7 +36,7 @@ public class TestUtils {
   public static Employee createEmployee(long id, String userId, String organizationName) {
     Employee employee = new Employee();
     employee.setId(id);
-    employee.setUserId(userId);
+    employee.setEmployeeId(userId);
     employee.setOrganizationName(organizationName);
     return employee;
   }

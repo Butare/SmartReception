@@ -26,6 +26,12 @@ public class EmployeeController {
   @Autowired
   private EmployeeService employeeService;
   
+  //TODO: update this to get current user, or removed it before production
+  @GetMapping("/me")
+  public String getMe() {
+    return "Its me \n";
+  }
+  
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Employee insert(@RequestBody @Valid Employee employee) {

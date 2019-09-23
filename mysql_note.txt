@@ -1,0 +1,12 @@
+To manually start mysql server:
+  - run :
+       $ /usr/local/mysql/support-files/mysql.server start
+       
+  or 
+  
+  - Go to: System preferences -> [click] MySQL
+  
+  
+ To access to mySQL db:
+  -$ cd /usr/local/mysql/bin
+  -$ mysql -uroot -p123   

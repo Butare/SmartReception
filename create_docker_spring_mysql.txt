@@ -1,0 +1,82 @@
+# this script explains how to turn a spring boot application into a dockerized application.
+
+----------------
+Some key words:
+    image: is like a class
+    container: is like an instance of a class (runtime object)
+----------------
+
+Note: we will create two docker images
+    A. mysql image
+    B. spring boot application image
+
+    A. mysql image
+
+1. check already installed docker images:
+   $ docker images
+
+2. download 'mysql' docker image from docker hub
+    $ docker pull mysql:5.7    // here we specified the mysql version
+                               // more info:  https://hub.docker.com/_/mysql
+
+3. starting mysql instance (mysql docker container), this will create docker container
+    $ docker run --name mysql-standalone -e MYSQL_ROOT_PASSWORD=123 -e MYSQL_DATABASE=SmartReception -e MYSQL_USER=jimmy -d mysql:5.7
+    // --name: used to rename mysql docker container.
+
+    Notes: =================
+        working docker image:     mysql_testing
+        working docker container: mysql_testing_cont
+
+        root user password: 123
+
+    =========================
+
+    To access docker containers machine:
+        $ docker exec -it <container_name> bash
+
+    To see the docker container list:
+        $ docker container ls
+
+    B. spring boot application image
+
+1.  - need to check the mysql config in 'application.properties'
+    - change or add server-port (8080 not recommended because tomcat uses the same port by default)
+    - make sure the username and password match with those provided to create mysql docker container.
+    - change:
+        From: spring.datasource.url=jdbc:mysql://localhost:3306/smartreception
+        To  : spring.datasource.url=jdbc:mysql://mysql-standalone:3306/smartreception
+            // notice that localhost has changed mysql-standalone
+
+-----------
+build docker image with name(with dockerfile):
+    $ docker build -t image_name .
+-----------
+
+-------
+   check to create mysql database container:
+    https://medium.com/@backslash112/start-a-remote-mysql-server-with-docker-quickly-9fdff22d23fd
+-------
+
+------------------
+    check this for the steps to create mysql database with initial tables:
+        https://medium.com/@lvthillo/customize-your-mysql-database-in-docker-723ffd59d8fb
+------------------
+
+2. create Dockerfile in the spring boot application
+        // refer to this: https://spring.io/guides/topicals/spring-boot-docker
+
+3. after creating Dockerfile you need to create a docker image (will be created based on the Dockerfile)
+    - go to the root dir of spring boot application
+    - run: $ docker build . -t smart-reception   // notice (.) meaning the current directory,
+                                                // the image name will be 'smart-reception' (should be in lowercases)
+  3.1. to run springboot container alone:
+    - $ docker run -p 8080:8080 smart-reception
+
+  3.2. to poke around inside the image you can open a shell in it like:
+    - $ docker run -ti --entrypoint /bin/sh smart-reception
+
+4. run docker container in order to run spring boot project & link it with the mysql container already created.
+    $ docker run -p 8086:8086 --name smart-reception --link mysql-standalone:mysql -d smart-reception
+
+To checker container's log:
+     $ docker logs smart-reception

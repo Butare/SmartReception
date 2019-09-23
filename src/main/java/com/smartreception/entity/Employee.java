@@ -19,14 +19,14 @@ public class Employee {
   
   private long id;
   
-  @NotEmpty(message = "{notEmpty.user.userId}")
-  private String userId;
+  @NotEmpty(message = "{notEmpty.employee.employeeId}")
+  private String employeeId;
   
   private String firstName;
   
   private String lastName;
     
-  @NotEmpty(message = "{notEmpty.User.organizationName}")
+  @NotEmpty(message = "{notEmpty.employee.companyName}")
   private String organizationName;
   
   private String email;

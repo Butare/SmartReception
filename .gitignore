@@ -7,3 +7,5 @@
 /build
 /bin
 *.class
+/src/main/resources
+/docs
