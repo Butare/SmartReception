@@ -2,7 +2,7 @@ version: 2
 jobs: 
   build:
     docker: 
-      - image: circleci/openjdk:stretch-node-browsers-legacy
+      - image: image: circleci/openjdk:9.0.4-jdk
     steps:
       - checkout
       - run: 
