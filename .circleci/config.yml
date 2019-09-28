@@ -1,10 +1,13 @@
 version: 2
 jobs: 
   build:
+    environment:
+        _JAVA_OPTIONS: "-Xmx3g"
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
     docker: 
-      - image:circleci/openjdk:9.0.4-jdk
+      - image: circleci/openjdk:stretch-node-browsers-legacy
     steps:
-      - checkout
+      - checkout 
       - run: 
           name: build and test with production code
           command: ./gradlew build
