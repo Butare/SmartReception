@@ -2,11 +2,11 @@ plugins {
     id 'java' 
     id 'eclipse'
     id 'org.springframework.boot' version '2.1.2.RELEASE'
-    //id 'org.flywaydb.flyway' version '5.2.0'
+    id 'org.flywaydb.flyway' version '6.0.4'
 }
 
-//group = 'com.smartreception' //base package, gradle compiles anything within.
-//version = '0.0.1-SNAPSHOT'
+group = 'com.smartreception' //base package, gradle compiles anything within.
+version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = '1.9'
 targetCompatibility = '1.9'
@@ -21,7 +21,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'  
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    compile 'org.flywaydb:flyway-core:5.2.0'
     implementation 'mysql:mysql-connector-java'
     compileOnly 'org.projectlombok:lombok'
     compile 'org.json:json:20180130'
@@ -29,4 +28,11 @@ dependencies {
     testCompile 'junit:junit'
     testImplementation 'org.mockito:mockito-core'
     annotationProcessor 'org.projectlombok:lombok'
+}
+
+flyway {
+  url = 'jdbc:mysql://localhost:3306'
+  user = 'root'
+  password = '123'
+  schemas = ['smartreception']
 }

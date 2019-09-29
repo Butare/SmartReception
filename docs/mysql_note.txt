@@ -9,4 +9,10 @@ To manually start mysql server:
   
  To access to mySQL db:
   -$ cd /usr/local/mysql/bin
-  -$ mysql -uroot -p123   
+  -$ mysql -uroot -p123  
+  
+  
+  
+  
+  To migrate db using flyway:
+    -$ ./gradlew flywayMigrate -i 
