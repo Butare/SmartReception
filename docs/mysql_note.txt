@@ -5,14 +5,25 @@ To manually start mysql server:
   or 
   
   - Go to: System preferences -> [click] MySQL
-  
+-----------------------------------------------  
   
  To access to mySQL db:
   -$ cd /usr/local/mysql/bin
   -$ mysql -uroot -p123  
-  
-  
+-----------------------------------------------
   
   
   To migrate db using flyway:
     -$ ./gradlew flywayMigrate -i 
+-------------------------------------------------  
+  
+  When migration fails chances are, the previous Migration(s) was failed,
+  keep causing the other migrations fail:
+ 
+  1. run repair:
+    $ ./gradlew flywayRepair
+    
+  2. run migrate again
+    $ ./gradlew flywayMigrate -i
+    
+-------------------------------------------------
