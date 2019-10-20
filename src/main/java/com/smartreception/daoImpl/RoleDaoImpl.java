@@ -71,10 +71,6 @@ public class RoleDaoImpl implements RoleDao {
         .append("deleted = :deleted ")
         .append("WHERE id = :Id");
     
-//    String updateQuerys = 
-//          "UPDATE role SET name = :name, createdAt = :createdAt, "
-//        + "updatedAt = :updatedAt, deleted = :deleted, ";
-    
     return npJdbcTemplate.update(updateQuery.toString(),
         new BeanPropertySqlParameterSource(role));
   }
