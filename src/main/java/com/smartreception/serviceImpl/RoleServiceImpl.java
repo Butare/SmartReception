@@ -1,5 +1,6 @@
 package com.smartreception.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,20 @@ public class RoleServiceImpl implements RoleService{
   }
 
   @Override
-  public Role getRoleById() {
-    return roleDao.getRoleById();
+  public Role getRoleById(long id) {
+    return roleDao.getRoleById(id);
   }
 
   @Override
   public long insert(Role role) {
+    role.setCreatedAt(LocalDateTime.now());
     return roleDao.insert(role);
   }
 
   @Override
-  public long update(Role role, long roleId) {
-    return roleDao.update(role, roleId);
+  public long update(Role role) {
+    role.setUpdatedAt(LocalDateTime.now());
+    return roleDao.update(role);
   }
 
   @Override

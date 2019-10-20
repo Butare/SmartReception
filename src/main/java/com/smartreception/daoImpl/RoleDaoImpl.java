@@ -1,10 +1,10 @@
 package com.smartreception.daoImpl;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ public class RoleDaoImpl implements RoleDao {
     
     this.simpleJdbcInsert
           .withTableName("role")
-            .usingColumns("id", "name", "createdAt", "updatedAt")
+            .usingColumns("name", "createdAt", "updatedAt", "deleted")
               .usingGeneratedKeyColumns("id");
   }
   
@@ -43,31 +43,44 @@ public class RoleDaoImpl implements RoleDao {
   }
 
   @Override
-  public Role getRoleById() {
-    return null;
+  public Role getRoleById(long id) {
+    String sql = "SELECT * FROM role WHERE id = :Id "; 
+    
+    try {
+      return npJdbcTemplate.queryForObject(sql,
+          Map.of("Id", id), new RoleRowMapper());
+    }catch(Exception ex) { 
+      return new Role();
+     }
   }
 
   @Override
   public long insert(Role role) {
-    return 0;
+    return simpleJdbcInsert.executeAndReturnKey(
+        new BeanPropertySqlParameterSource(role)).longValue();
   }
 
   @Override
-  public long update(Role role, long roleId) {
-    return 0;
+  public long update(Role role) {
+
+    StringBuilder updateQuery = new StringBuilder()
+        .append("UPDATE role SET ")
+        .append("name = :name, ")
+        .append("createdAt = :createdAt, ")
+        .append("updatedAt = :updatedAt, ")
+        .append("deleted = :deleted ")
+        .append("WHERE id = :Id");
+    
+//    String updateQuerys = 
+//          "UPDATE role SET name = :name, createdAt = :createdAt, "
+//        + "updatedAt = :updatedAt, deleted = :deleted, ";
+    
+    return npJdbcTemplate.update(updateQuery.toString(),
+        new BeanPropertySqlParameterSource(role));
   }
 
   @Override
   public void delete(long id) {
     
   }
-  
-  private Role getDummyRole() {
-    Role role = new Role();
-    role.setId(20);
-    role.setName("empty");
-    role.setCreatedAt(LocalDateTime.now());
-    return role;
-  }
-
 }

@@ -7,8 +7,8 @@ import com.smartreception.entity.Role;
 public interface RoleService {
   
   public List<Role> getRoles();
-  public Role getRoleById();
+  public Role getRoleById(long id);
   public long insert(Role role);
-  public long update(Role role, long roleId);
+  public long update(Role role);
   public void delete(long id);
 }

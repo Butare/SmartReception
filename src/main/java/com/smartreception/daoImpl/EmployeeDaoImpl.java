@@ -30,7 +30,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     this.npJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate.getDataSource());
     this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
         .withTableName("employees")
-        .usingColumns("employeeId", "firstName", "lastName", "organizationName", "email", "phone", "createdAt", "updatedAt", "deleted")
+        .usingColumns("emplosyeeId", "firstName", "lastName", "organizationName", "email", "phone", "createdAt", "updatedAt", "deleted")
         .usingGeneratedKeyColumns("id");
   }
   
