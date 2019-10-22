@@ -39,7 +39,7 @@ public class RoleDaoImpl implements RoleDao {
   
   @Override
   public List<Role> getRoles() {
-    return npJdbcTemplate.query("SELECT * FROM role", new RoleRowMapper());
+    return npJdbcTemplate.query("SELECT * FROM role WHERE deleted= FALSE", new RoleRowMapper());
   }
 
   @Override
@@ -77,6 +77,7 @@ public class RoleDaoImpl implements RoleDao {
 
   @Override
   public void delete(long id) {
-    
+    String deleteQuery = "UPDATE role SET deleted= TRUE WHERE id= :Id";
+    npJdbcTemplate.update(deleteQuery, Map.of("Id", id));
   }
 }
