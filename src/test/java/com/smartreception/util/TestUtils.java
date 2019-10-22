@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartreception.entity.Employee;
+import com.smartreception.entity.Role;
 
 public class TestUtils {
   
@@ -39,5 +40,22 @@ public class TestUtils {
     employee.setEmployeeId(userId);
     employee.setOrganizationName(organizationName);
     return employee;
+  }
+  
+  // default role
+  public static Role createRole() {
+    return createRole(0L); 
+  }
+  
+  public static Role createRole(long id) {
+    return createRole(id, "test-role1");
+  }
+  
+  public static Role createRole(long id, String name, boolean ...deleted) {
+    Role role = new Role();
+    role.setId(id);
+    role.setName(name);
+    role.setDeleted(deleted[0]);
+    return role;
   }
 }

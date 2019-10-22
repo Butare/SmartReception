@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,14 +45,21 @@ public class RoleController {
   @ResponseStatus(HttpStatus.OK)
   public Role update(@PathVariable("id") long id, @RequestBody @Valid Role role) {
     Role originalRole = roleService.getRoleById(id);
-    System.out.println(originalRole.toString());
     if (ObjectUtils.isEmpty(originalRole)) {
       throw new NotFoundException("Role id: "+ id +" doesn't exists.");
     }
     originalRole.setName(role.getName());
-    //System.out.println(originalRole.toString());
     roleService.update(originalRole);
     
     return originalRole;
+  }
+  
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable("id") long id) {
+    if (ObjectUtils.isEmpty(roleService.getRoleById(id))) {
+      throw new NotFoundException("Role id: "+ id + " doesn't exists.");
+    }
+    roleService.delete(id);
   }
 }
