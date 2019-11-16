@@ -2,6 +2,7 @@ package com.smartreception.serviceImpl;
 
 import static org.mockito.Mockito.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,11 +19,15 @@ import com.smartreception.util.TestUtils;
 @SpringBootTest
 public class EmployeeServiceImplTest {
 
-  @InjectMocks
   private EmployeeServiceImpl employeeServiceImpl;
 
   @Mock
   private EmployeeDao employeeDao;
+  
+  @Before
+  public void setup() {
+    employeeServiceImpl = new EmployeeServiceImpl(employeeDao);
+  }
 
   @Test
   public void testDeleteEmployeeShouldPassWhenNotNull() throws Exception {

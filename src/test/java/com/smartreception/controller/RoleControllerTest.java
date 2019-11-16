@@ -3,7 +3,6 @@ package com.smartreception.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,7 +25,6 @@ import com.smartreception.util.TestUtils;
 @SpringBootTest
 public class RoleControllerTest {
   
-  @InjectMocks
   private RoleController roleController;
   
   @Mock
@@ -36,6 +34,7 @@ public class RoleControllerTest {
   
   @Before
   public void setUp() {
+    roleController = new RoleController(roleService);
     this.mockMvc = MockMvcBuilders.standaloneSetup(roleController).build();
   }
   

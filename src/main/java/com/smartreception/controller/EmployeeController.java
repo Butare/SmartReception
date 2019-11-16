@@ -23,8 +23,12 @@ import com.smartreception.service.EmployeeService;
 @RestController
 public class EmployeeController {
   
+  private final EmployeeService employeeService;
+  
   @Autowired
-  private EmployeeService employeeService;
+  public EmployeeController(EmployeeService employeeService) {
+    this.employeeService = employeeService;
+  }
   
   //TODO: update this to get current user, or removed it before production
   @GetMapping("/me")

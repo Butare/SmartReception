@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -20,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.smartreception.controller.EmployeeController;
-import com.smartreception.dao.EmployeeDao;
 import com.smartreception.entity.Employee;
 import com.smartreception.service.EmployeeService;
 import com.smartreception.util.TestUtils;
@@ -29,19 +27,16 @@ import com.smartreception.util.TestUtils;
 @SpringBootTest
 public class EmployeeControllerTest {
   
-  @InjectMocks
-  EmployeeController employeeController;
+  private EmployeeController employeeController;
   
   @Mock
   private EmployeeService employeeService;
-  
-  @Mock 
-  private EmployeeDao employeeDao;
   
   private MockMvc mockMvc;
   
   @Before
   public void setup() {
+    employeeController = new EmployeeController(employeeService);
     this.mockMvc = MockMvcBuilders
         .standaloneSetup(employeeController)
         .build();
