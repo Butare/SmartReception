@@ -3,7 +3,6 @@ package com.smartreception.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -11,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.smartreception.dao.EmployeeDao;
-import com.smartreception.dao.VisitorDao;
 import com.smartreception.entity.Visitor;
 import com.smartreception.service.VisitorService;
 import com.smartreception.util.TestUtils;
@@ -29,22 +26,16 @@ import java.util.List;
 @SpringBootTest
 public class VisitorControllerTest {
   
-  @InjectMocks
   private VisitorController visitorController;
   
   @Mock
   private VisitorService visitorService;
   
-  @Mock
-  private VisitorDao visitorDao;
-  
-  @Mock 
-  private EmployeeDao userDao;
-  
   private MockMvc mockMvc;
   
   @Before
   public void setup() {
+    visitorController = new VisitorController(visitorService);
     mockMvc = MockMvcBuilders.standaloneSetup(visitorController).build();
   }
   

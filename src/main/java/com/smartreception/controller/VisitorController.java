@@ -24,8 +24,12 @@ import com.smartreception.service.VisitorService;
 @RequestMapping("/visitors")
 public class VisitorController {
   
+  private final VisitorService visitorService;
+  
   @Autowired
-  private VisitorService visitorService;
+  public VisitorController(VisitorService visitorService) {
+    this.visitorService = visitorService;
+  }
   
   @GetMapping
   @ResponseStatus(HttpStatus.OK)

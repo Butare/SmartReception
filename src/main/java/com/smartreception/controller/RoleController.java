@@ -25,8 +25,12 @@ import com.smartreception.service.RoleService;
 @RequestMapping("/roles")
 public class RoleController {
 
+  private final RoleService roleService;
+  
   @Autowired
-  private RoleService roleService;
+  public RoleController(RoleService roleService) {
+    this.roleService = roleService;
+  }
 
   @GetMapping
   public List<Role> getRoles() {
