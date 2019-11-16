@@ -15,8 +15,12 @@ import com.smartreception.service.EmployeeService;
 @Component
 public class EmployeeServiceImpl implements EmployeeService {
 
+  private final EmployeeDao employeeDao;
+  
   @Autowired
-  private EmployeeDao employeeDao;
+  public EmployeeServiceImpl(final EmployeeDao employeeDao) {
+    this.employeeDao = employeeDao;
+  }
 
   @Override
   public long insert(Employee employee) {
