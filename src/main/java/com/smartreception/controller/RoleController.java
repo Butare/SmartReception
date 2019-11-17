@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smartreception.entity.Role;
 import com.smartreception.exception.NotFoundException;
+import com.smartreception.repository.RoleRepository;
 import com.smartreception.service.RoleService;
 
 @RestController
@@ -28,12 +29,21 @@ public class RoleController {
   private final RoleService roleService;
   
   @Autowired
+  private RoleRepository roleRepository;
+  
+  @Autowired
   public RoleController(RoleService roleService) {
     this.roleService = roleService;
+  }
+  
+  // test spring jdbc data
+  public void printRoles() {
+    System.out.println(roleRepository.findByName("tester1"));
   }
 
   @GetMapping
   public List<Role> getRoles() {
+    printRoles();
     return roleService.getRoles();
   }
 

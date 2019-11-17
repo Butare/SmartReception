@@ -15,7 +15,7 @@ public class RoleServiceImpl implements RoleService{
   
   @Autowired
   private RoleDao roleDao;
-
+ 
   @Override
   public List<Role> getRoles() {
     return roleDao.getRoles();
@@ -42,5 +42,4 @@ public class RoleServiceImpl implements RoleService{
   public void delete(long id) {
     roleDao.delete(id);
   }
-
 }

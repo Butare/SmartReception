@@ -12,6 +12,7 @@ sourceCompatibility = '1.9'
 targetCompatibility = '1.9'
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
 apply plugin: 'io.spring.dependency-management'
 
 repositories {
@@ -21,6 +22,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'  
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'mysql:mysql-connector-java'
     compileOnly 'org.projectlombok:lombok'
     compile 'org.json:json:20180130'

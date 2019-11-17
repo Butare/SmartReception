@@ -17,6 +17,7 @@ public class RoleRowMapper implements RowMapper<Role>{
     role.setName(rs.getString("name"));
     role.setCreatedAt(rs.getObject("createdAt", LocalDateTime.class));
     role.setUpdatedAt(rs.getObject("updatedAt", LocalDateTime.class));
+    role.setDeleted(rs.getBoolean("deleted"));
     
     return role;
   }
