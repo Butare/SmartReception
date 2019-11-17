@@ -32,19 +32,19 @@ public class RoleDaoImpl implements RoleDao {
     this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource());
     
     this.simpleJdbcInsert
-          .withTableName("role")
+          .withTableName("roles")
             .usingColumns("name", "createdAt", "updatedAt", "deleted")
               .usingGeneratedKeyColumns("id");
   }
   
   @Override
   public List<Role> getRoles() {
-    return npJdbcTemplate.query("SELECT * FROM role WHERE deleted= FALSE", new RoleRowMapper());
+    return npJdbcTemplate.query("SELECT * FROM roles WHERE deleted= FALSE", new RoleRowMapper());
   }
 
   @Override
   public Role getRoleById(long id) {
-    String sql = "SELECT * FROM role WHERE id = :Id "; 
+    String sql = "SELECT * FROM roles WHERE id = :Id "; 
     
     try {
       return npJdbcTemplate.queryForObject(sql,
@@ -64,7 +64,7 @@ public class RoleDaoImpl implements RoleDao {
   public long update(Role role) {
 
     StringBuilder updateQuery = new StringBuilder()
-        .append("UPDATE role SET ")
+        .append("UPDATE roles SET ")
         .append("name = :name, ")
         .append("createdAt = :createdAt, ")
         .append("updatedAt = :updatedAt, ")
@@ -77,7 +77,7 @@ public class RoleDaoImpl implements RoleDao {
 
   @Override
   public void delete(long id) {
-    String deleteQuery = "UPDATE role SET deleted= TRUE WHERE id= :Id";
+    String deleteQuery = "UPDATE roles SET deleted= TRUE WHERE id= :Id";
     npJdbcTemplate.update(deleteQuery, Map.of("Id", id));
   }
 }

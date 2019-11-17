@@ -18,7 +18,7 @@ To manually start mysql server:
 -------------------------------------------------  
   
   When migration fails chances are, the previous Migration(s) was failed,
-  keep causing the other migrations fail:
+  keep causing the other migrations to fail:
  
   1. run repair:
     $ ./gradlew flywayRepair
