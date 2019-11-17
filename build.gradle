@@ -30,9 +30,18 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 }
 
+def props = new Properties()
+file("src/main/resources/application.properties").withInputStream { props.load(it) }
+
 flyway {
+  url = props.getProperty("spring.flyway.url")
+  user = props.getProperty("spring.flyway.user")
+  password = props.getProperty("spring.flyway.password")
+  schemas = ['smartreception']
+}
+/*flyway {
   url = 'jdbc:mysql://localhost:3306'
   user = 'root'
   password = '123'
   schemas = ['smartreception']
-}
+}*/
